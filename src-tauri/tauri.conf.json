@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "lexian2",
+  "productName": "lexian",
   "version": "0.1.0",
   "identifier": "com.vyleene.lexian",
   "build": {
@@ -9,10 +9,17 @@
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
+  "plugins": {
+    "sql": {
+      "preload": [
+        "sqlite:lexian.db"
+      ]
+    }
+  },
   "app": {
     "windows": [
       {
-        "title": "lexian2",
+        "title": "Lexian - Simple Student Information System",
         "width": 800,
         "height": 600
       }
