@@ -1,11 +1,11 @@
-import "./App.css";
-import { useGreetingController } from "./controllers/GreetingController";
-import { GreetingView } from "./views/GreetingView";
+import './App.css'
+import { AppController } from './controllers/AppController'
+import AppView from './views/AppView'
 
 function App() {
-  const controller = useGreetingController();
+  const appViewModel = AppController()
 
-  return <GreetingView {...controller} />;
+  return <AppView {...appViewModel} />
 }
 
-export default App;
+export default App
