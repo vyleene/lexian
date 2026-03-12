@@ -1,6 +1,21 @@
-use tauri_plugin_sql::{Migration, MigrationKind};
+use sqlx::{Pool, Sqlite};
+use tauri_plugin_sql::{DbInstances, DbPool, Migration, MigrationKind};
 
 pub const DATABASE_URL: &str = "sqlite:lexian.db";
+
+pub async fn sqlite_pool(db_instances: &DbInstances) -> Result<Pool<Sqlite>, String> {
+    let instances = db_instances.0.read().await;
+    let Some(db_pool) = instances.get(DATABASE_URL) else {
+        return Err(format!(
+            "Database pool for '{}' is not loaded. Ensure sql.preload includes this URL.",
+            DATABASE_URL
+        ));
+    };
+
+    match db_pool {
+        DbPool::Sqlite(pool) => Ok(pool.clone()),
+    }
+}
 
 pub fn sqlite_migrations() -> Vec<Migration> {
     vec![Migration {
