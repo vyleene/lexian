@@ -7,7 +7,7 @@ import {
   type ThemeMode,
 } from '../models/AppModel'
 
-export function useAppController(): AppViewProps {
+export function AppController(): AppViewProps {
   const [activePanel, setActivePanel] = useState<PanelKey>(DEFAULT_PANEL)
   const [theme, setTheme] = useState<ThemeMode>(DEFAULT_THEME)
   const [showSplash, setShowSplash] = useState(true)
