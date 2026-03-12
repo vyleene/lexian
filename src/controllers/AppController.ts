@@ -6,8 +6,25 @@ import {
   type PanelKey,
   type ThemeMode,
 } from '../models/AppModel'
-import { getCurrentWindow } from '@tauri-apps/api/window';
-import { isTauri } from '@tauri-apps/api/core';
+import { getCurrentWindow } from '@tauri-apps/api/window'
+import { isTauri } from '@tauri-apps/api/core'
+
+const THEME_STORAGE_KEY = 'lexian-theme'
+
+const resolveInitialTheme = (): ThemeMode => {
+  if (typeof window === 'undefined') {
+    return DEFAULT_THEME
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+
+  if (storedTheme === 'dark' || storedTheme === 'light') {
+    return storedTheme
+  }
+
+  const htmlTheme = document.documentElement.getAttribute('data-bs-theme')
+  return htmlTheme === 'dark' || htmlTheme === 'light' ? htmlTheme : DEFAULT_THEME
+}
 
 type TauriRuntimeWindow = {
   minimize: () => Promise<void>
@@ -15,18 +32,23 @@ type TauriRuntimeWindow = {
 }
 
 const runWindowAction = async (action: (appWindow: TauriRuntimeWindow) => Promise<void>) => {
-  if (!isTauri) return;
-  action(getCurrentWindow());
+  if (!isTauri()) {
+    return
+  }
+
+  await action(getCurrentWindow())
 }
 
 export function AppController(): AppViewProps {
   const [activePanel, setActivePanel] = useState<PanelKey>(DEFAULT_PANEL)
-  const [theme, setTheme] = useState<ThemeMode>(DEFAULT_THEME)
+  const [theme, setTheme] = useState<ThemeMode>(() => resolveInitialTheme())
   const [showSplash, setShowSplash] = useState(true)
   const [hideSplash, setHideSplash] = useState(false)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-bs-theme', theme)
+    document.documentElement.style.colorScheme = theme
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
   }, [theme])
 
   useEffect(() => {

@@ -22,6 +22,17 @@
   --app-accent-strong: var(--app-primary);
   --app-accent-soft: color-mix(in srgb, var(--app-primary) 12%, transparent);
   --app-accent-glow: color-mix(in srgb, var(--app-primary) 28%, transparent);
+  --app-shell-gradient:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(in srgb, var(--app-accent-soft) 12%, transparent) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at 88% 12%,
+      color-mix(in srgb, var(--app-accent-soft) 10%, transparent) 0%,
+      transparent 65%
+    );
   --app-surface-2: color-mix(in srgb, var(--app-surface) 90%, var(--app-text) 10%);
   --app-shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.08);
   --app-shadow-card: 0 16px 30px rgba(0, 0, 0, 0.12);
@@ -64,17 +75,7 @@ html[data-bs-theme='dark'] {
 body {
   margin: 0;
   background-color: var(--app-bg);
-  background-image:
-    radial-gradient(
-      circle at 12% 8%,
-      color-mix(in srgb, var(--app-accent-soft) 12%, transparent) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      circle at 88% 12%,
-      color-mix(in srgb, var(--app-accent-soft) 10%, transparent) 0%,
-      transparent 65%
-    );
+  background-image: var(--app-shell-gradient);
   background-attachment: fixed;
   color: var(--app-text);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -89,7 +90,9 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: var(--bs-body-bg, #212529);
+  background-color: var(--app-bg);
+  background-image: var(--app-shell-gradient);
+  background-attachment: fixed;
   transition: opacity 0.3s ease;
 }
 
