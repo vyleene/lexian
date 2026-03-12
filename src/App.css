@@ -137,6 +137,14 @@ body {
   border-bottom: 1px solid var(--app-border);
 }
 
+.app-titlebar__drag-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
 .app-titlebar__brand {
   display: flex;
   align-items: center;
@@ -174,6 +182,11 @@ body {
   place-items: center;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
+}
+
+.titlebar-icon {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .titlebar-btn:hover {

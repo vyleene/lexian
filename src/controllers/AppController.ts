@@ -6,6 +6,18 @@ import {
   type PanelKey,
   type ThemeMode,
 } from '../models/AppModel'
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { isTauri } from '@tauri-apps/api/core';
+
+type TauriRuntimeWindow = {
+  minimize: () => Promise<void>
+  close: () => Promise<void>
+}
+
+const runWindowAction = async (action: (appWindow: TauriRuntimeWindow) => Promise<void>) => {
+  if (!isTauri) return;
+  action(getCurrentWindow());
+}
 
 export function AppController(): AppViewProps {
   const [activePanel, setActivePanel] = useState<PanelKey>(DEFAULT_PANEL)
@@ -40,6 +52,14 @@ export function AppController(): AppViewProps {
     setActivePanel(panel)
   }
 
+  const onMinimizeWindow = () => {
+    void runWindowAction((appWindow) => appWindow.minimize())
+  }
+
+  const onCloseWindow = () => {
+    void runWindowAction((appWindow) => appWindow.close())
+  }
+
   return {
     activePanel,
     theme,
@@ -47,5 +67,7 @@ export function AppController(): AppViewProps {
     hideSplash,
     onToggleTheme,
     onSelectPanel,
+    onMinimizeWindow,
+    onCloseWindow,
   }
 }

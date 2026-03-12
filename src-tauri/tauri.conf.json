@@ -20,8 +20,9 @@
     "windows": [
       {
         "title": "Lexian - Simple Student Information System",
-        "width": 800,
-        "height": 600
+        "width": 1200,
+        "height": 905,
+        "decorations": false
       }
     ],
     "security": {

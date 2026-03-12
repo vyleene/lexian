@@ -21,13 +21,20 @@ function AppView({
   showSplash,
   hideSplash,
   onToggleTheme,
+  onMinimizeWindow,
+  onCloseWindow,
   onSelectPanel,
 }: AppViewProps) {
   return (
     <>
       {showSplash && <div id="splash-screen" className={hideSplash ? 'hide' : ''}></div>}
 
-      <TitleBar theme={theme} onToggleTheme={onToggleTheme} />
+      <TitleBar
+        theme={theme}
+        onToggleTheme={onToggleTheme}
+        onMinimizeWindow={onMinimizeWindow}
+        onCloseWindow={onCloseWindow}
+      />
 
       <DirectoryNav activePanel={activePanel} onSelectPanel={onSelectPanel} />
 

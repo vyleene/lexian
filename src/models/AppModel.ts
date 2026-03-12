@@ -14,6 +14,8 @@ export interface AppViewModel {
 export interface AppViewActions {
   onToggleTheme: () => void
   onSelectPanel: (panel: PanelKey) => void
+  onMinimizeWindow: () => void
+  onCloseWindow: () => void
 }
 
 export type AppViewProps = AppViewModel & AppViewActions
